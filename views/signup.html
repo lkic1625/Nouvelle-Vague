@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <div class="auth-container">
+    <h1>Sign up</h1>
+    <form id="signup-form" action="/auth/join" method="post">
+      <div class="input-group">
+        <input id="signup-name" type="text" name="name" placeholder="Full name"></div>  
+      <div class="input-group">
+        <input id="signup-email" type="email" name="email"placeholder="Email"></div>
+      <div class="input-group">
+        <input id="signup-password" type="password" name="password"  placeholder="password">
+      </div>
+      <div class="input-group">
+        <input id="confirm-password" type="password" name="confirm"  placeholder="confirm password">
+      </div>
+      <button id="signup-btn" type="submit" class="btn">Next</button>
+    </form>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    window.onload = () => {
+      if (new URL(location.href).searchParams.get('error')) {
+        alert('이미 존재하는 이메일입니다.');
+      }
+    };
+  </script>
+{% endblock %}

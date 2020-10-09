@@ -11,10 +11,14 @@ const hpp = require('hpp')
 const RedisStore = require('connect-redis')(session);
 const redis = require('redis');
 const fs = require('fs');
+const flash = require('connect-flash');
 
 const logger = require('./logger');
 const { sequelize } = require('./models');
 const indexRouter = require('./routes');
+const userRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
+const boardRouter =require('./routes/board');
 // const passportConfig = require('./passport');
 
 const app = express();
@@ -49,6 +53,7 @@ if (process.env.NODE_ENV === 'production'){
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
+
 //:true then express use qs module
 //:false then express use query-string module
 //The differences between parsing with `qs library` vs `querystring library`
@@ -56,11 +61,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
+
 const client = redis.createClient({
   no_ready_check: true,
-  host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
-  pass: process.env.REDIS_PASSWORD,
   logErrors: true,
 });
 
@@ -77,6 +81,8 @@ const sessionOptions = {
   }),
 }
 
+app.use(session(sessionOptions))
+
 if (process.env.NODE_ENV === 'production'){
   sessionOptions.proxy = true;
   sessionOptions.cookie.secure = true;
@@ -84,8 +90,12 @@ if (process.env.NODE_ENV === 'production'){
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use('/', indexRouter);
+app.use('/user', userRouter);
+app.use('/auth', authRouter);
+app.use('/board', boardRouter);
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

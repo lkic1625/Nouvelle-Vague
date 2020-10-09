@@ -6,13 +6,13 @@ body{
 	background-color: rgba(0,0,0,0.9);
 }
 .container{
-	background-image: url(../img/background.png);
+	background-image: url(../images/background.png);
 	background-position: 0px  150px;
 	background-size: 100%,auto;
 	background-repeat: no-repeat;
 
 
-	background-color: white;
+	background-color: black;
 	padding: 0 calc(100% - 1000px)/2;
 }
 header{
@@ -80,6 +80,7 @@ header{
 	transition: 1.0s;
 	display: none;
 }
+
 
 .mask {
 
@@ -288,3 +289,104 @@ span.views{
 	float: right;
 
 } 	
+
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap');
+
+
+.auth-container{
+	margin: 0;
+	padding: 0;
+	outline: 0;
+	display: none;
+	float: right;
+	background-color: #212121;
+	color: #fafafa;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: 35%;
+}
+
+.auth-container h1{
+	color: #fafafa;
+	text-align: center;
+	margin: 25px 0;
+	font-family: 'Roboto',sans-serif;
+	font-size: 2.5rem;	
+}
+.input-group input{
+	border:none;
+	background-color: transparent;
+	border-bottom: 2px solid #fafafa;
+	color: #fafafa;
+	margin: 10px;
+	width: calc(100% - 30px);
+	font-size: 1.3rem;
+	padding: 10px 15px;
+}
+
+.input-group textarea{
+	border:none;
+	background-color: transparent;
+	border-bottom: 2px solid #fafafa;
+	color: #fafafa;
+	margin: 10px;
+	width: calc(100% - 30px);
+	font-size: 1.3rem;
+	padding: 10px 15px;	
+}
+
+.auth-res{
+	display: none;
+	border:none;
+	background-color: transparent;
+	color: #fafafa;
+	margin: 10px 10px 0px 10px;
+	width: calc(100% - 30px);
+	font-size: 0.9rem;
+	padding: 10px 15px;
+}
+
+.auth-submit{
+	text-align: center;
+	width: calc(100% - 40px);
+	border-radius: 30px;
+	padding: 10px 15px;
+	background-color: transparent;
+	border: 2px solid #fafafa;
+	color: #fafafa;
+	margin: 40px 20px;
+	transition: .4s;
+	cursor: pointer;
+	font-size: 1rem;
+	text-transform: uppercase;
+	font-family: 'Open Sans',sans-serif;
+}
+
+
+.board-container{
+	margin: 0;
+	padding: 0;
+	outline: 0;
+	display: none;
+	float: right;
+	background-color: #212121;
+	color: #fafafa;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: 35%;
+}
+
+.hashtag{
+	margin: 2px;
+	padding: 10px 15px;
+	text-align: center;
+	display: inline-block;
+	border: 2px solid #fafafa;
+	color: #fafafa;
+	border-radius: 15px;
+}
