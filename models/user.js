@@ -21,8 +21,7 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(200),
                 allowNull: false, 
                 validate: {
-                   
-                    
+                
                 }
             },
             name: {

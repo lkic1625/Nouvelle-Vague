@@ -22,7 +22,7 @@ redisClient.on('error', (err) => {
 
   
 const router = express.Router();
-router.post('/signup', isNotLoggedIn, async (req, res, next) => {
+router.post('/signup', multerParser.none(), async (req, res, next) => {
     const { email, password, name } = req.body;
     try {
         const user = await User.findOne({
@@ -57,11 +57,12 @@ router.post('/logout', multerParser.none(), async (req, res, next) => {
     const { email } = req.body;
     console.log(req);
     try {
+        req.session.destroy();
         const user = await User.findOne({ 
             where: { email, }
         });
         if(user){//case: find user
-            req.session.destroy();
+            
             return res.clearCookie("jwt").status(200).json({
                 message: '로그아웃 성공',
             });  

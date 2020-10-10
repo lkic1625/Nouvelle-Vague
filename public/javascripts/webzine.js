@@ -5,7 +5,7 @@ var like = new Array();
 
 const setCookie = (name, value, exp) => {
 	var date = new Date();
-	date.setTime(date.getTime() + exp*24*60*60*1000);
+	date.setTime(date.getTime() + exp*60*1000);
 	document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
 };
 
@@ -19,8 +19,10 @@ const deleteCookie = (name) => {
 }
 
 $(function(){
+	if(!getCookie('jwt')) {
 	
-
+	};
+	
 	$('.scene').each(function( ){
 		$(this).click(function(){
 			if(!like[$(this).data('post')]){
@@ -35,32 +37,53 @@ $(function(){
 			$('#next').data('post',nextpost);
 
 			wrapWindowByMask('.article-container');
-			$.ajax({
-				type : "GET",
-				url :"js/review.json",
-				dataType : "html",
-			
-				success: function(data){
-					var parser = $.parseJSON(data);
+			axios.get(`/board/posts/${post}`)
+				.then((res) => {
+					const parser = $.parseJSON(res.data.post);
+				
+					//TODO: view, year, director 추가
+					$('span.views').html(parser.views);
 					
-					for(i = 0; i < parser.length; i++){
-						if(parser[i].post == post) break;
-					}
-					
-					$('span.views').html(parser[i].views);
-					$('.postname').html(parser[i].title);
-					$('.date').html(parser[i].date);
-					$('.auth').html(parser[i].author);
-					$('.content p').html(parser[i].posttxt);
-					$('.content img').attr('src',parser[i].postimgsrc);
+					$('.postname').html(parser.title);
+					$('.date').html(parser.createdAt);
+					$('.auth').html(parser.author);
+					$('.content p').html(parser.description);
+					$('.content img').attr('src',parser.posterImg);
 					$('.tags ul').html("");
-					for (var j = 0; j < parser[i].tags.length; j++) {
-						$('.tags ul').append('<li>' + parser[i].tags[j] + '</li>');
-
-					}
+					parser.Tags.forEach((element) => {
+						$('.tags ul').append('<li>' + element.tag + '</li>');
+					});
 					
-				}
-			});
+				})
+				.catch((err) => {
+					
+				})
+			// $.ajax({
+			// 	type : "GET",
+			// 	url :"js/review.json",
+			// 	dataType : "html",
+			
+			// 	success: function(data){
+			// 		var parser = $.parseJSON(data);
+					
+			// 		for(i = 0; i < parser.length; i++){
+			// 			if(parser[i].post == post) break;
+			// 		}
+					
+			// 		$('span.views').html(parser[i].views);
+			// 		$('.postname').html(parser[i].title);
+			// 		$('.date').html(parser[i].date);
+			// 		$('.auth').html(parser[i].author);
+			// 		$('.content p').html(parser[i].posttxt);
+			// 		$('.content img').attr('src',parser[i].postimgsrc);
+			// 		$('.tags ul').html("");
+			// 		for (var j = 0; j < parser[i].tags.length; j++) {
+			// 			$('.tags ul').append('<li>' + parser[i].tags[j] + '</li>');
+
+			// 		}
+					
+			// 	}
+			// });
 			
 		});
 	});
@@ -68,31 +91,33 @@ $(function(){
 
 
 
-$(function() {
+// $(function() {
 
-	$.ajax({
-				type : "GET",
-				url :"js/review.json",
-				dataType : "html",
+// 	$.ajax({
+// 				type : "GET",
+// 				url :"js/review.json",
+// 				dataType : "html",
 			
-				success: function(data){
-					var parser = $.parseJSON(data);
+// 				success: function(data){
+// 					var parser = $.parseJSON(data);
 					
-					for (var i = 1; i < 21; i++) {
-						$('[data-post='+ i +'] .info > header > h1').html(parser[i-1].title);
-						$('[data-post='+ i +'] .info p').html(parser[i-1].posttxt);
+// 					for (var i = 1; i < 21; i++) {
+// 						$('[data-post='+ i +'] .info > header > h1').html(parser[i-1].title);
+// 						$('[data-post='+ i +'] .info p').html(parser[i-1].posttxt);
 						
-						for (var j = 0; j < parser[i-1].tags.length; j++) {
-						$('[data-post='+i+']').attr('data-tag',function(){ return $(this).attr('data-tag') + ' ' + parser[i-1].tags[j]; });
+// 						for (var j = 0; j < parser[i-1].tags.length; j++) {
+// 						$('[data-post='+i+']').attr('data-tag',function(){ 
+// 							return $(this).attr('data-tag') + ' ' + parser[i-1].tags[j];
+// 						});
 
-					}
+// 					}
 				
-				}
+// 				}
 					
-				}
-			});
+// 				}
+// 			});
 	
-});
+// });
 
 //handle onclick event 
 $(function() {
@@ -112,7 +137,7 @@ $(function() {
 			.then((res) => {
 				console.log(res);
 				if(res.status == 200){
-					setCookie('jwt', res.data.token, 0.01);
+					setCookie('jwt', res.data.token, 30);
 					window.location.href = '/';
 				} else{
 					$('#login-res')
@@ -147,7 +172,6 @@ $(function() {
 					}
 				})
 				.then((res) => {
-					console.log(res);
 					if(res.status == 200){
 						window.location.href = '/';
 					} 
@@ -159,21 +183,22 @@ $(function() {
 			
 		} else if( formType == 'write-form'){
 			//TODO: Confirmation of filling out according to form
-			const formData = new FormData($('write-form')[0]);
+			const formData = new FormData();
 			const token = getCookie('jwt');
 			console.log(formData);
-			const tags = $('.hashtag').each(() => {
+			const tags = [];
+			$('.hashtag').each(function(idx) {
 				console.log( $(this).html());
-				return $(this).html();
+				tags.push($(this).html());
 			})
 			
-			// formData.append('title', $('#write-title')[0].value);
-			// formData.append('title', $('#write-title')[0].value);
-			// formData.append('description', $('#write-description')[0].value);
-			formData.append('tags', tags);
-			// formData.append('mainImg', $('write-mainImg').files[0]);
-			// formData.append('posterImg', $('write-posterImg').files[0]);
-			// formData.append('previewImg', $('write-previewImg').files[0]);
+			formData.append('title', $('#write-title')[0].value);
+			
+			formData.append('description', $('#write-description').val());
+			formData.append('tags', JSON.stringify(tags));
+			formData.append('mainImg', $('#write-mainImg')[0].files[0]);
+			formData.append('posterImg', $('#write-posterImg')[0].files[0]);
+			formData.append('previewImg', $('#write-previewImg')[0].files[0]);
 			
 			axios.post('board/posts', formData, {
 				headers: {
@@ -182,13 +207,17 @@ $(function() {
 				}
 				})
 				.then((res) => {
-					$('#write-res').html(res.data.message);
-					window.location.href = '/';
+					if(res.status == 201){
+						$('#write-res').html(res);
+						window.location.href = '/';
+					}
+					
 					
 				})	
 				.catch((err) => {
+					console.log(err);
 					$('#write-res').html('서버 오류로 잠시후에 시도해주세요.');
-				})
+				});
 		}
 	});
 
@@ -209,6 +238,8 @@ $(function() {
 	});
 
 	$('#write-btn').click(() => {
+		//TODO: dev용 주석해제
+		// $('#write-form')[0].reset();
 		wrapWindowByMask('.board-container#write-box');				
 	});
 
@@ -303,22 +334,68 @@ function wrapWindowByMask(selector = '.window'){
 
 
 $(function() {
-	for (var i = 0;  i < 27; i++) {
-		like[i] = false;
-	}
+	// for (var i = 0;  i < 27; i++) {
+	// 	like[i] = false;
+	// }
 
   $(".heart").on("click", function() {
-  	if(like[($('#next').data('post')-1)] == false){
-  		like[($('#next').data('post')-1)] = true;
-  	}
-  	else{  $(this).toggleClass('is-active'); return;} 
+  	// if(like[($('#next').data('post')-1)] == false){
+  	// 	like[($('#next').data('post')-1)] = true;
+  	// }
+  	// else{  
+	// 	$(this).toggleClass('is-active');
+	// 	return;
+	// }
+	axios.post('/posts/like/:post_id', {
+		headers: {
+			'Authorization': getCookie('jwt'),
+		}
+	})
+	.then((res) => {
+		if(res.status == 201){
+			const post;
+			$(this).toggleClass('is-active');
+			$('.liketitle').append("<li data-post = '" + ($('#next').data('post')-1) +"' style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap; display:none'>" + $('.postname').html() + "</li>");
+			$('.liketitle li:nth-last-child(1)').fadeIn(1000);
+			$('.liketitle li:nth-last-child(1)').each(function(){
+				$(this).click(function(){
+					var temp = $(this);
+					axios.get(`/board/posts/${post}`)
+					.then((res) => {
+						const parser = $.parseJSON(res.data.post);
+						
+						
+						//TODO: view, year, director 추가
+						$('span.views').html(parser.views);
+						
+						$('.postname').html(parser.title);
+						$('.date').html(parser.createdAt);
+						$('.auth').html(parser.author);
+						$('.content p').html(parser.description);
+						$('.content img').attr('src',parser.posterImg);
+						$('.tags ul').html("");
+						parser.Tags.forEach((element) => {
+							$('.tags ul').append('<li>' + element.tag + '</li>');
+						});
+					
+					})
+					.catch((err) => {
+						
+					})
+    		});
+		}
+	})
+	.catch((err) => {
+
+	})
 
     $(this).toggleClass("is-active");
     $('.liketitle').append("<li data-post = '" + ($('#next').data('post')-1) +"' style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap; display:none'>" + $('.postname').html() + "</li>");
     $('.liketitle li:nth-last-child(1)').fadeIn(1000);
     $('.liketitle li:nth-last-child(1)').each(function(){
     	$(this).click(function(){
-    	var temp = $(this);
+		var temp = $(this);
+		
     	$.ajax({
 				type : "GET",
 				url :"js/review.json",

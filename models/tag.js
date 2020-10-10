@@ -12,6 +12,7 @@ module.exports = class Tag extends Sequelize.Model{
             tag: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
+                unique: true,
             }
         }, {
             sequelize,

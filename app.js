@@ -75,6 +75,7 @@ const sessionOptions = {
   cookie: {
     httpOnly: true,
     secure: false,
+    maxAge: 30*60*1000,
   },
   store: new RedisStore({
     client

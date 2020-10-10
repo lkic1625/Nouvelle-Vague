@@ -22,7 +22,7 @@ module.exports = class Post extends Sequelize.Model{
                 allowNull: false,
             },
             description: {
-                type: Sequelize.STRING(500),
+                type: Sequelize.STRING(5000),
                 allowNull: false,
             },
             posterImg: {
@@ -34,9 +34,28 @@ module.exports = class Post extends Sequelize.Model{
                 allowNull: false,
             },
             preview: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.STRING(5000),
                 allowNull: false,
+            },
+            views: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0,
+            },
+            rating: {
+                type: Sequelize.FLOAT,
+                allowNull: true,
+
+            },
+            year: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+            },
+            director: {
+                type: Sequelize.STRING(100),
+                allownull: true,
             }
+            
         }, {
             sequelize,
             timestamps: true,
