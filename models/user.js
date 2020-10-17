@@ -21,7 +21,10 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(200),
                 allowNull: false, 
                 validate: {
-                
+                    //비밀번호 정규식
+                    is: { 
+                        args: /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/,
+                        msg: "8자 이상 영문, 숫자, 특수문자를 반드시 포함하여 주세요."},
                 }
             },
             name: {

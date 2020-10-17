@@ -2,6 +2,8 @@
 	font-family: "Noto Sans KR";
 }
 
+@import './table.scss';
+
 body{
 	background-color: rgba(0,0,0,0.9);
 }
@@ -59,12 +61,14 @@ header{
 	max-width: 1280px;
 	margin: 0 auto;
 }
+.write-box
 .article-box{
 	float: left;
 	width: 900px;
 	margin: 30px;
 	height: 100%;
 }
+.write-box > article
 .article-box > article{
 	background-color: white;
 	height: 2000px;
@@ -113,10 +117,12 @@ article{
 *::selection {
   background: #ffff9e; /* WebKit/Blink Browsers */
 }
+
 .next-article{
 	margin: 0px 50px;
 	float: left;
 }
+
 .next-article > h1{
 	width: 100%;
 	color: white;
@@ -246,6 +252,7 @@ span.views{
 .info p{
 	display: block;
 	font-size: 7px;
+	overflow: hidden;
 
 }
 .info{
@@ -365,9 +372,16 @@ span.views{
 	font-family: 'Open Sans',sans-serif;
 }
 
+#write-form-submit{
+	
+
+	border: 2px solid black;
+	color: black;
+	
+}
 
 .board-container{
-	margin: 0;
+	/* margin: 0;
 	padding: 0;
 	outline: 0;
 	display: none;
@@ -378,7 +392,7 @@ span.views{
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%,-50%);
-	width: 35%;
+	width: 35%; */
 }
 
 .hashtag{
@@ -390,3 +404,171 @@ span.views{
 	color: #fafafa;
 	border-radius: 15px;
 }
+
+.likes-list{
+	text-overflow: ellipsis; 
+	overflow: hidden; 
+	white-space: nowrap;
+  }
+
+input.postname{
+	
+	width: 100%;
+	border: none;
+	color: white;
+}
+
+input.date{
+	width: 100%;
+	border: none;
+	color: #ff7fb3;
+}
+
+
+.preview-box{
+	width: 100%;
+	height: 990px;
+	margin-bottom: 20px;
+	position: relative;
+	cursor: pointer;
+	background: #f4f4f4;
+	display: table;
+	background-size: cover;
+	background-position: center center;
+	box-shadow: 0 5px 8px rgba(0, 0, 0, 0.35); 
+}
+#previewImg-preview{
+	width: 50%;
+	height: 220px;
+}
+
+
+.preview-box .dashes {
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	width: 100%;
+	height: 100%;
+	border: 4px dashed #ddd;
+	opacity: 1; }
+
+.preview-box label {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	padding: 0 30px;
+	color: grey;
+	opacity: 1; }
+	.preview-box.dragging {
+		background-image: none !important; }
+		.preview-box.dragging .dashes {
+		  animation-duration: 10s;
+		  animation-name: spin;
+		  animation-iteration-count: infinite;
+		  animation-timing-function: linear;
+		  opacity: 1 !important; }
+		  .preview-box.dragging label {
+		  opacity: 0.5 !important; }
+		  .preview-box.hasImage .dashes, .preview-box.hasImage label {
+		opacity: 0;
+		pointer-events: none;
+		user-select: none; }
+	
+	
+.image-uploader{
+	position: absolute;
+  	top: -1000px;
+}
+
+#write-description {
+	border: none;
+	width: 100%;
+}
+
+#write-tags{
+	border: none;
+	width: 100%;
+}
+
+
+*, *:before, *:after {
+	box-sizing: border-box; }
+  
+  @keyframes spin {
+	from {
+	  transform: rotate(0deg); }
+	to {
+	  transform: rotate(360deg); } }
+  
+  .table-wrapper {
+	min-height: 100vh;
+	background: #666;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300; }
+  
+  .table {
+	display: table;
+	width: 100%;
+	height: 100vh;
+   }
+  
+  .table-cell {
+	display: table-cell;
+	vertical-align: middle; }
+  
+  .modal {
+	width: 300px;
+	height: 400px;
+	margin: 0 auto;
+	background: #fff;
+	box-shadow: 0 40px 50px rgba(0, 0, 0, 0.35);
+	padding: 40px; }
+  
+  #mediaFile {
+	position: absolute;
+	top: -1000px; }
+  
+  /* h1 {
+	text-align: center;
+	font-size: 28px;
+	font-weight: normal;
+	letter-spacing: 1px; } */
+  
+  .stat {
+	width: 50%;
+	text-align: center;
+	float: left;
+	padding-top: 20px;
+	border-top: 1px solid #ddd; }
+	.stat .label {
+	  font-size: 11px;
+	  font-weight: bold;
+	  letter-spacing: 1px;
+	  text-transform: uppercase; }
+	.stat .num {
+	  font-size: 21px;
+	  padding: 3px 0; }
+  
+  .editable {
+	position: relative; }
+	.editable i {
+	  position: absolute;
+	  top: 10px;
+	  right: -20px;
+	  opacity: 0.3; }
+  
+  button {
+	width: 100%;
+	-webkit-appearance: none;
+	line-height: 40px;
+	color: #fff;
+	border: none;
+	background-color: #ea4c89;
+	margin-top: 30px;
+	font-size: 13px;
+	-webkit-font-smoothing: antialiased;
+	font-weight: bold;
+	letter-spacing: 1px;
+	text-transform: uppercase; }
+  

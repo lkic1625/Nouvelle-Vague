@@ -25,6 +25,7 @@ const router = express.Router();
 router.post('/signup', multerParser.none(), async (req, res, next) => {
     const { email, password, name } = req.body;
     try {
+       
         const user = await User.findOne({
             where: { email, }
         });
@@ -45,10 +46,16 @@ router.post('/signup', multerParser.none(), async (req, res, next) => {
             message: '회원가입이 완료됐습니다.',
         });
         
-    } catch (error) {
-        logger.error(error);
-        console.error(error);
-        return next(error);
+    } catch (err) {
+        
+        if(err.name == 'SequelizeValidationError'){
+            return res.status(400).json({
+                message: err.message,
+            });
+        }
+        logger.error(err);
+        console.error(err);
+        return next(err);
     }
 });
 

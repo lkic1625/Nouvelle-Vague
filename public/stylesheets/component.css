@@ -58,7 +58,7 @@ Transform and style the two planes
 .movie .info {
 	position: absolute;
 	width: 260px;
-	height: 400px;
+	height: 350px;
 	background-color: #fff;
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
@@ -174,7 +174,7 @@ Generate "lighting" using box shadows
 Posters and still images
 **************************************/
 
-[data-post = '1'] .movie .poster {
+/* [data-post = '1'] .movie .poster {
   background-image: url(../reviewImg/moonrise_kingdom.jpg);
 }
 
@@ -338,7 +338,7 @@ Posters and still images
 }
 [data-post = '26'] .info header {
 	background-image: url(../ostImg/moriconne.gif);
-}
+} */
 
 /*************************************
 Fallback

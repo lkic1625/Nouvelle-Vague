@@ -1,61 +1,187 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="/stylesheets/initreset.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/component.css">
+
+
 	<link href="https://fonts.googleapis.com/css?family=Dhurjati" rel="stylesheet">
 	<link href="/stylesheets/webzine.css" rel="stylesheet" type="text/css" />
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><script type="text/javascript" src="/javascripts/webzine.js"> </script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/javascripts/webzine.js"> </script>
 	<title>
 		Nouvelle Vague
 	</title>
 </head>
-<body>
-	
-<div class="mask"></div>
 
-	
+<body>
+
+	<div class="mask"></div>
+
+
 	<div class="window auth-container" id="signup-box">
 		<h1>Sign up</h1>
 		<form id="signup-form" action="/auth/signup" method="post">
-		  <div class="input-group">
-			<input id="signup-name" type="text" name="name" placeholder="Full name"></div>  
-		  <div class="input-group">
-			<input id="signup-email" type="email" name="email"placeholder="Email"></div>
-		  <div class="input-group">
-			<input id="signup-password" type="password" name="password"  placeholder="password">
-		  </div>
-		  <div class="input-group">
-			<input id="confirm-password" type="password" name="confirm"  placeholder="confirm password">
-		  </div>
-		  <div class="auth-res" id="signup-res">
-			  
-		  </div>
-		  <div class="auth-submit">Next</div>
-		  
+			<div class="input-group">
+				<input id="signup-name" type="text" name="name" placeholder="Full name"></div>
+			<div class="input-group">
+				<input id="signup-email" type="email" name="email" placeholder="Email"></div>
+			<div class="input-group">
+				<input id="signup-password" type="password" name="password" placeholder="password">
+			</div>
+			<div class="input-group">
+				<input id="confirm-password" type="password" name="confirm" placeholder="confirm password">
+			</div>
+			<div class="auth-res" id="signup-res">
+
+			</div>
+			<div class="auth-submit">Next</div>
+
 		</form>
 	</div>
 	<div class="window auth-container" id="login-box">
 		<h1>Sign in</h1>
 		<form id="login-form" action="/auth/login" method="post">
-		  <div class="input-group">
-			<input id="login-email" type="email" name="email" placeholder="Email"></div>
-		  <div class="input-group">
-			<input id="login-password" type="password" name="password"  placeholder="password">
-		  </div>
-		  
-		  <div class="auth-res" id="login-res">
-		  </div>
-		  <div class="auth-submit" >Login</div>
+			<div class="input-group">
+				<input id="login-email" type="email" name="email" placeholder="Email"></div>
+			<div class="input-group">
+				<input id="login-password" type="password" name="password" placeholder="password">
+			</div>
+
+			<div class="auth-res" id="login-res">
+			</div>
+			<div class="auth-submit">Login</div>
 
 		</form>
 	</div>
 	<div class="window board-container" id="write-box">
-		<h1>Sign up</h1>
-		<form id="write-form" action="/board/write" method="post">
+		<div id="article-wrap">
+			<article>
+				<div class="post">
+					<div class="title">
+						<!-- <div class="input-group">
+						<input class></input>
+					</div> -->
+						<div class="date">Jun 14, 2020</div>
+						<input class="postname" id="write-title" placeholder="제목을 입력해주세요">
+						{% if email %}
+						<div class="postby">
+							by. 
+							<span class="auth">
+							{{email}}
+							</span>
+						</div>
+						{% endif %}
+						<div class="views">
+							views. 
+							<span class="views">
+							0
+							</span>
+
+						</div>
+						<!-- <div class="like">
+							<div class="stage">
+								<div class="heart"></div>
+							</div>
+						</div> -->
+					</div>
+					<div class="posttxt">
+						<div class="content">
+							<!-- <div class="table-wrapper">
+								
+							<div class="table">
+								<div class="table-cell">
+									<div class="modal">
+										<div id="profile">
+											<div class="dashes"></div>
+											<label>Click to browse or drag an image here</label>
+										</div>
+										<div class="editable"><i class="fa fa-pencil"></i>
+											<h1 contenteditable>Drew Vosburg</h1>
+										</div>
+										<div class="stat">
+											<div class="label">Shots</div>
+											<div class="num">40</div>
+										</div>
+										<div class="stat">
+											<div class="label">Projects</div>
+											<div class="num">1</div>
+										</div>
+										<button>Done Editing</button>
+									</div>
+								</div>
+							</div>
+							<input type="file" id="mediaFile" />
+							
+							</div> -->
+							<form id="write-form" action="/board/write" method="post">
+							<input class="image-uploader" id="write-mainImg" type="file" accept="image/*" name="mainImg">
+							<input class="image-uploader" id="write-previewImg" type="file" accept="image/*" name="previewImg">
+							<div class="preview-box" id="previewImg-preview">
+								<div class="dashes"></div>
+								<label>클릭하여 씬 이미지를 업로드해주세요!</label>
+							</div>
+							<div class="preview-box" id="mainImg-preview">
+								<div class="dashes"></div>
+								<label>클릭하여 이미지를 업로드해주세요!</label>
+							</div>
+							
+							<textarea id="write-description" rows="15" cols="200" name="description" placeholder="본문"></textarea>
+							<input id="write-tags" type="text" name="tags" placeholder="태그를 입력해주세요" >
+							<div class="auth-submit" id="write-form-submit">작성하기</div>
+							</form>
+						</div>
+						<div class="relatedposts">
+							<h3></h3>
+							<ul>
+								<li>
+
+								</li>
+							</ul>
+						</div>
+						<div class="tags">
+							<h1>#Tags</h1>
+							<ul id="preview-tags">
+
+							</ul>
+						</div>
+						
+
+						<div class="widebottom"></div>
+					</div>
+				</div>
+				<div class="next-article">
+					<h1>Preview</h1>
+					<ul class="stage clearfix">
+						<li class="scene" id="preview-scene">
+							<div class="movie">
+								<div class="poster" id="poster-preview"></div>
+								<div class="info">
+									<header id="preview-preview">
+										<h1>{{post.id}}</h1>
+										<span class="rating">{{post.rating}}</span>
+										<span class="year">{{post.year}}</span>
+										<span class="duration">{{post.director}}</span>
+									</header>
+									<p id="preview">
+										
+									</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+
+
+
+			</article>
+		</div>
+		<!-- <form id="write-form" action="/board/write" method="post">
 		  <div class="input-group">
 			<input id="write-title" type="text" name="title" placeholder="Title "> 
 		  </div>
@@ -81,117 +207,122 @@
 		  </div>
 		  <div class="auth-submit">작성하기</div>
 		  
-		</form>
+		</form> -->
 	</div>
 	<!-- window클래스 디자인 변경 -->
-    <div class="window article-container">
-    	<div id="article-wrap">
-    		<article>
-    			<div class="post">
-    			<div class="title">
-					<!-- <div class="input-group">
+	<div class="window article-container">
+		<div id="article-wrap">
+			<article>
+				<div class="post">
+					<div class="title">
+						<!-- <div class="input-group">
 						<input class></input>
 					</div> -->
-    				<div class="date">Jun 14, 2018</div>
-    				<span class="postname">It's a Wonderful Life</span>
-    				<div class="postby">
-    					by.
-    					<span class="auth">
-    					 	
-    					</span>
-    				</div>
-    				<div class="views">
-    					views. 
-    					<span class="views">
-    					
-    					</span>
+						<div class="date" id="datetime">Jun 14, 2018</div>
+						<span class="postname" id="window-postname">It's a Wonderful Life</span>
+						<div class="postby">
+							by.
+							<span class="auth" id="author">
 
-    				</div>
-    				<div class="like">
-    					<div class="stage">
-  							<div class="heart"></div>
-						</div>	
-    				</div>
-    			</div>
-    			<div class="posttxt">
-    				<div class="content">
-    					<img style="width: 100%;">
-    					<p>
-						</p>
-    				</div>
-    				<div class="relatedposts">
-    					<h3></h3>
-    					<ul>
-    						<li>
-    							
-    						</li>
-    					</ul>
-    				</div>	
-    				<div class="tags">
-    					<h1>#Tags</h1>
-    					<ul>
-    						
-    					</ul>
-    				</div>
-    				
-    				
-    				<div class="widebottom"></div>
-    			</div>
-    			</div>
-    			<div class="next-article">
-    				<h1>Next post</h1>
-    				<ul class="stage clearfix">
-					<li class="scene" id="next">
-						
+							</span>
+						</div>
+						<div class="views" id="viewss">
+							views.
+							<span class="views">
+
+							</span>
+
+						</div>
+						<div class="like">
+							<div class="stage">
+								<div class="heart"></div>
+							</div>
+						</div>
+					</div>
+					<div class="posttxt">
+						<div class="content">
+							<img id="main-img" style="width: 100%;">
+							<p>
+							</p>
+						</div>
+						<div class="relatedposts">
+							<h3></h3>
+							<ul>
+								<li>
+
+								</li>
+							</ul>
+						</div>
+						<div class="tags" id="window-tags">
+							<h1>#Tags</h1>
+							<ul>
+
+							</ul>
+						</div>
+
+
+						<div class="widebottom"></div>
+					</div>
+				</div>
+				<div class="next-article">
+					<h1>Next post</h1>
+					<ul class="stage clearfix">
+						<li class="scene" id="next">
+
+						</li>
+					</ul>
+				</div>
+				<div class="likeposts">
+					#Like Posts
+
+				</div>
+				<ul class="liketitle">
+					{% for like in likes %}
+					<li class="likes-list" data-post={{like.id}}>
+						{{like.title}}
 					</li>
-					</ul>
-    			</div>
-    			<div class="likeposts">
-    				#Like Posts
-    				
-    			</div>
-    			<ul class="liketitle" >
-    				
-    			</ul>
+					{% endfor %}
+				</ul>
 
 
-    		</article>	 
-    	</div>
-    </div>
+			</article>
+		</div>
+	</div>
 	<div class="container">
-			<header>
-				<nav id="menu-tab">
-					<ul id="item-list">
-						<li onclick="$('.scene').css('display','block');" style="width : 150px; margin: 0;">Nouvelle Vague</li>
-					</ul>
+		<header>
+			<nav id="menu-tab">
+				<ul id="item-list">
+					<li onclick="$('.scene').css('display','block');" style="width : 150px; margin: 0;">Nouvelle Vague
+					</li>
+				</ul>
+				<ul>
+					<!-- <li class="tab1">월간 특집</li>
+						<li class="tab2">영화평론</li>	 -->
+				</ul>
+				<div style="float: right;">
 					<ul>
-						<li class="tab1">월간 특집</li>
-						<li class="tab2">영화평론</li>	
-					</ul>
-					<div style="float: right;">
-						<ul>
-							{% if email %}
-							<li id="write-btn">
-								글 작성
-							</li>
-							<li id="logout-btn">
-								로그아웃
-							</li>
-							
-							<script>
-								var email = {{ email | dump | safe }};
-								
-								$('#logout-btn').click(() => {
-									let formData = new FormData();
-									formData.append('email', email);
-									axios.post('/auth/logout', formData, {
-										headers: {
-											'Content-Type': 'multipart/form-data'
-										}
-									})
+						{% if email %}
+						<li id="write-btn">
+							글 작성
+						</li>
+						<li id="logout-btn">
+							로그아웃
+						</li>
+
+						<script>
+							var email = {{ email | dump | safe }};
+
+							$('#logout-btn').click(() => {
+								let formData = new FormData();
+								formData.append('email', email);
+								axios.post('/auth/logout', formData, {
+									headers: {
+										'Content-Type': 'multipart/form-data'
+									}
+								})
 									.then((res) => {
 										console.log(res);
-										if(res.status == 200){
+										if (res.status == 200) {
 											window.location.href = '/';
 										}
 									})
@@ -200,45 +331,46 @@
 										window.location.href = '/';
 									});
 							});
-							</script>
-							
-							{% else %}
-							<li id="login-btn">
-								로그인
-							</li>
-							<li id="signup-btn">
-								회원가입
-							</li>
-							{% endif %}
-							<!-- 카카오 로그인 기능 추가 -->
-							<!-- <li class="login-btn kakao">카카오</li> -->
-						</ul>
-					</div>
-					<div style="float: right;">
-						<h1 style="float: left; font-size: 20px;"></h1>
-						<ul class="tag-nav" style="overflow: hidden;">
-							<li>#미국</li>
-							<li>#한국</li>
-							<li>#애니메이션</li>
-							<li>#뮤지컬</li>
-						</ul>
-					</div>
-					
-				</nav>
-				
-			</header>
-			<div id="logo" >
-				Nouvelle Vague
-			</div>
-			
-			<div class="wrapper">
-				<div id="contents">	
-					<ul class="stage clearfix">
+						</script>
 
-					
+						{% else %}
+						<li id="login-btn">
+							로그인
+						</li>
+						<li id="signup-btn">
+							회원가입
+						</li>
+						{% endif %}
+						<!-- 카카오 로그인 기능 추가 -->
+						<!-- <li class="login-btn kakao">카카오</li> -->
+					</ul>
+				</div>
+				<div style="float: right;">
+					<h1 style="float: left; font-size: 20px;"></h1>
+					<ul class="tag-nav" style="overflow: hidden;">
+						{% for tag in tags %}
+						<li>#{{tag.tag}}</li>
+						{% endfor %}
+
+					</ul>
+				</div>
+
+			</nav>
+
+		</header>
+		<div id="logo">
+			Nouvelle Vague
+		</div>
+
+		<div class="wrapper">
+			<div id="contents">
+				<ul class="stage clearfix">
+
+
 					{% for post in posts %}
-					<li class="scene" data-post = {{post.id}} data-tag = "">
-						<div class="movie" >
+					<li class="scene" data-post={{post.id}}
+						data-tag='{% for tag in post.Tags %}#{{tag.tag}}{% endfor %}'>
+						<div class="movie">
 							<div class="poster" style="background-image: url({{post.posterImg}});"></div>
 							<div class="info">
 								<header style="background-image: url({{post.previewImg}});">
@@ -254,13 +386,14 @@
 						</div>
 					</li>
 					{% endfor %}
-				
-			
+
+
 				</ul>
-			</div>				
 			</div>
+		</div>
 	</div><!-- /container -->
-</div>
+	</div>
 
 </body>
+
 </html>

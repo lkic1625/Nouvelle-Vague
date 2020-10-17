@@ -54,7 +54,7 @@ exports.verifyToken = (req, res, next) => {
         message: 'expired token',
       });
     }
-    console.log(error);
+    console.error(error);
     return res.status(401).json({
       code: 401,
       message: 'invalid token',
