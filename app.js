@@ -64,7 +64,9 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const client = redis.createClient({
   no_ready_check: true,
+  host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
+  pass: process.env.REDIS_PASSWORD,
   logErrors: true,
 });
 

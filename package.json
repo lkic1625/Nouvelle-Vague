@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app"
+    "start": "cross-env NODE_ENV=production PORT=80 pm2 start app.js -i -1",
+    "dev": "nodemon app"
   },
   "dependencies": {
     "aws-sdk": "^2.759.0",
